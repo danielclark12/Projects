@@ -3,3 +3,5 @@ Both open-addressing and the division method are implemented in this project. Fo
 of all the ASCII characters in the string and used the formula sum % tableLength to come up with an index. 
 A linked list data structure was also used to create chains that would deal with any collisions that may occur.
 
+Due to time restraints when the project was assigned, only a linked list implementation was required.
+
