@@ -1,0 +1,12 @@
+The purpose of this project was to implement the map-reduce algorithm by using socket programming to implement
+use for a client-server combo. 
+
+Client and Server are each their own respective programs and can be compiled with the given make file.
+
+Execution for the program is as follows:
+
+./server <Server Port>
+
+./client <Folder Name> <Number of clients> <Server IP> <Server Port>
+
+The program will count how many words of a given length occur in a given text file.
