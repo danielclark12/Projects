@@ -20,3 +20,7 @@ This project is a work in progress. Parts of the front end still needs some upda
 and I am working towards additional features such as events based on accounts, ability to login with any account
 in the database, additional security, etc. 
 ******
+******
+The front-end for admin.html along with a very basic outline for schedule.html was given from Dan Challou's CSCI 4131 course at the University of Minnesota
+The entire backend and scripts written in the html files were written by myself.
+******
