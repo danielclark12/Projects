@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <title>My Schedule</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expanded navbar-light bg-light mb-5">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/admin"> Admin Page </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/allEvents">All Events</a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link active" href="/schedule">Schedule</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/addEvent">Add
+            Event</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout"> Logout </a>
+        </li>
+        <p id="userName"> Welcome </p>
+      </ul>
+    </nav>
+    
+    <div class="container mb-5">
+      <div class="alert alert-secondary" role="alert">
+        Click on a day to see its events
+      </div>
+    </div>
+    <div class="container mb-3">
+      <ul id="days" class="nav nav-tabs nav-fill">
+        <li class="nav-item">
+          <a class="nav-link" onclick=
+                "formTable(this)">Sunday</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick=
+                "formTable(this)">Monday</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick=
+                "formTable(this)">Tuesday</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick=
+                "formTable(this)">Wednesday</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick=
+                "formTable(this)">Thursday</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick=
+                "formTable(this)">Friday</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick=
+                "formTable(this)">Saturday</a>
+        </li>
+      </ul><br>
+      <br>
+      <div class="container">
+        <table class="table table-striped" id="scheduleTable">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Time</th>
+              <th scope="col">Location</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Extra Information</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+   
+
+
+
+   <script>
+
+    $.get('userLogin').done(function(response) {
+      document.getElementById("userName").innerHTML = "Welcome " + response.login + "!";
+      }); 
+
+      function formTable(element) {
+        $('#days li a').removeClass("active");
+        $(element).addClass("active");
+        clearTable();
+        let day = $(element).text().toLowerCase();
+        console.log("the day: " + day);
+
+
+
+         $.post('/getAllEvents',
+            (data) => {
+                console.log("JSON" + data);
+                // parse
+                var parsed = JSON.parse(data);
+                addHTML(parsed,day);
+
+              
+          });
+       }
+
+
+
+      function addHTML(json,day) {
+     
+      var table = document.getElementById("scheduleTable");
+      
+        if (day == "monday"){
+        
+          clearTable();
+          var numEvents = Object.keys(json.monday).length;
+        
+          for(i = 0; i < numEvents; i++){
+            table.innerHTML += '<tr> <td>' + json.monday[i].name + '</td> <td>' + json.monday[i].start + ' - ' + json.monday[i].end + '</td> <td>' 
+            + json.monday[i].location + '</td> <td>' + json.monday[i].phone + '</td> <td>' + json.monday[i].info + '</td> </tr>'
+          }
+        }
+
+        if (day == "tuesday"){
+        
+        clearTable();
+        var numEvents = Object.keys(json.tuesday).length;
+      
+        for(i = 0; i < numEvents; i++){
+          table.innerHTML += '<tr> <td>' + json.tuesday[i].name + '</td> <td>' + json.tuesday[i].start + ' - ' + json.tuesday[i].end + '</td> <td>' 
+          + json.tuesday[i].location + '</td> <td>' + json.tuesday[i].phone + '</td> <td>' + json.tuesday[i].info + '</td> </tr>'
+        }
+      }
+      
+
+     if (day == "wednesday"){
+        
+        clearTable();
+        var numEvents = Object.keys(json.wednesday).length;
+      
+        for(i = 0; i < numEvents; i++){
+          table.innerHTML += '<tr> <td>' + json.wednesday[i].name + '</td> <td>' + json.wednesday[i].start + ' - ' + json.wednesday[i].end + '</td> <td>' 
+          + json.wednesday[i].location + '</td> <td>' + json.wednesday[i].phone + '</td> <td>' + json.wednesday[i].info + '</td> </tr>'
+        }
+     }
+
+
+      if (day == "thursday"){
+        
+        clearTable();
+        var numEvents = Object.keys(json.thursday).length;
+      
+        for(i = 0; i < numEvents; i++){
+          table.innerHTML += '<tr> <td>' + json.thursday[i].name + '</td> <td>' + json.thursday[i].start + ' - ' + json.thursday[i].end + '</td> <td>' 
+          + json.thursday[i].location + '</td> <td>' + json.thursday[i].phone + '</td> <td>' + json.thursday[i].info + '</td> </tr>'
+        }
+      }
+
+
+      if (day == "friday"){
+        
+        clearTable();
+        var numEvents = Object.keys(json.friday).length;
+      
+        for(i = 0; i < numEvents; i++){
+
+          table.innerHTML += '<tr> <td>' + json.friday[i].name + '</td> <td>' + json.friday[i].start + ' - ' + json.friday[i].end + '</td> <td>' 
+          + json.friday[i].location + '</td> <td>' + json.friday[i].phone + '</td> <td>' + json.friday[i].info + '</td> </tr>'
+        }      
+      }
+
+
+      if (day == "saturday"){
+        
+        clearTable();
+        var numEvents = Object.keys(json.saturday).length;
+      
+        for(i = 0; i < numEvents; i++){
+          table.innerHTML += '<tr> <td>' + json.saturday[i].name + '</td> <td>' + json.saturday[i].start + ' - ' + json.saturday[i].end + '</td> <td>' 
+          + json.saturday[i].location + '</td> <td>' + json.saturday[i].phone + '</td> <td>' + json.saturday[i].info + '</td> </tr>'
+        }
+      }
+
+
+      if (day == "sunday"){
+        
+        clearTable();
+        var numEvents = Object.keys(json.sunday).length;
+      
+        for(i = 0; i < numEvents; i++){
+          table.innerHTML += '<tr> <td>' + json.sunday[i].name + '</td> <td>' + json.sunday[i].start + ' - ' + json.sunday[i].end + '</td> <td>' 
+          + json.sunday[i].location + '</td> <td>' + json.sunday[i].phone + '</td> <td>' + json.sunday[i].info + '</td> </tr>'
+        }
+      }
+    }
+
+      function clearTable() {
+       $('#scheduleTable tbody').empty();
+     }
+
+
+
+   </script>
+  </body>
+</html>

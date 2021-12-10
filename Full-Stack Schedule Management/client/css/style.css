@@ -1,0 +1,53 @@
+#login_failed {
+	color:blue;
+	text-align: center;
+}
+
+#failure {
+	margin-top:50px;
+	background-color: #ecc1be;
+}
+
+
+/* Styling for allEvents.html 
+table,th,td {
+
+    border:1px solid black;
+    border-collapse: collapse;
+    border-spacing:0;
+    padding-left:10px;
+    text-align:left;
+    margin-top:0;
+
+} */
+
+
+.day{
+    width:100px;
+}
+.event{
+    width:200px;
+}
+.time{
+    width:120px;
+}
+.location{
+    width:270px;
+}
+.number{
+    width:200px;
+}
+.url{
+    width:220px;
+}
+
+
+.tableHead {
+	color:red;
+}
+
+
+th {
+	background-color:#649b88;
+	color:white;
+}

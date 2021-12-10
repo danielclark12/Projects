@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	    <link rel="stylesheet" type="text/css" href="client/css/style.css">
+	    <title>Welcome to Node.js</title>
+	    <style type="text/css">
+              .jumbotron { text-align: center; }
+            </style>
+  </head>
+
+  <body>
+   	<div class="jumbotron" style="background: DarkSeaGreen !important">
+        <h1>Login to your Account</h1>
+        <p> Account information is case-sensative </p>
+        <br/>
+        <br/>
+    </div>
+
+    <!-- Form Implementation -->
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+
+    <form id="myForm" name="myForm">
+       <div>
+          <label for="login">login:</label> <br> 
+          <input type="text" id="login" name="login"> <br> <br>
+       </div>
+       <div>
+          <label for="password">password:</label> <br> 
+          <input type="password" id="password" name="password"> <br> <br>
+       </div>
+     
+
+     </div>
+     <div class="col-md-1"></div>
+   </div>
+
+
+       <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <input id="myButton" class="btn btn-primary btn-block" type="submit" value="Submit!">
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+    </form>
+
+    <div id="failure">
+      <span id="login_failed" class="row"></span>
+    </div>
+  
+
+    <script>
+
+      $(document).ready(function () {
+        $('#myForm').submit(function (event) {
+          event.preventDefault();
+          //collect the form data using Id Selector for whatever data you need to send to the server
+          let login= $('#login').val();
+          let password= $('#password').val();
+
+          // post to server
+          $.post('/login', {"login": login, "password": password},
+            (data) => {
+                console.log(data);
+              if (data.status === 'success') {
+
+                window.location.href = '/allEvents';
+            }
+            else {
+              //display error message
+              console.log("ERROR");
+              document.getElementById("login_failed").innerHTML = "Invalid Credentials. Please try again!";
+              document.getElementById("login").value = "";
+              document.getElementById("password").value = "";
+              
+
+              //alert("Invalid Credentials");
+
+            }
+          });
+
+        });
+      });
+      
+    </script>
+
+  </body>
+</html>
